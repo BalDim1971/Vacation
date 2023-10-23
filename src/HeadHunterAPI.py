@@ -21,8 +21,21 @@ class HeadHunterAPI(AbstractAPI):
 		
 		super().__init__('https://api.hh.ru/vacancies')
 		
-		r = requests.get(self.url)
-		print(r.content.decode('utf-8'))
+		self.params = {
+			"count": 100,
+			"page": 0,
+			"keyword": "python",
+			"archive": False,
+		}
+	
+	def get_vacancies(self):
+		'''
+		Получение списка вакансий с сайта
+		:return:
+		'''
+		
+		r = requests.get(self.url, params=self.params)
+		return r.content.decode('utf-8')
 
 
 ##########################################################################################################

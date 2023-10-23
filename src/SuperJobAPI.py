@@ -35,8 +35,14 @@ class SuperJobAPI(AbstractAPI):
 			"archive": False,
 		}
 		
+	def get_vacancies(self):
+		'''
+		Получение списка вакансий с сайта
+		:return:
+		'''
+		
 		r = requests.get(self.url, headers=self.headers)
-		print(r.content.decode('utf-8'))
-	
+		return r.content.decode('utf-8')
+		
 
 ##########################################################################################################
