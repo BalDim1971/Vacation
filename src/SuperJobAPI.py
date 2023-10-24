@@ -41,8 +41,8 @@ class SuperJobAPI(AbstractAPI):
 		:return:
 		'''
 		
-		r = requests.get(self.url, headers=self.headers)
-		return r.content.decode('utf-8')
+		r = requests.get(self.url, headers=self.headers, params=self.params).json()
+		return r
 		
 
 ##########################################################################################################

@@ -20,6 +20,10 @@ class AbstractAPI(ABC):
 		url: str - адрес сайта вакансий
 		'''
 		self.__url = url
+		self.headers = {}
+		self.params = {}
+		self.json_data = {}
+		self.name_file = ''
 		
 	@property
 	def url(self):
@@ -41,5 +45,10 @@ class AbstractAPI(ABC):
 		
 		self.__url = url
 	
+	def get_vacancies(self):
+		return self.json_data
 	
+	def save_vacancies(self):
+		pass
+
 ##########################################################################################################

@@ -23,6 +23,9 @@ def main():
 	
 	hh_vacancies = hh_api.get_vacancies()
 	ss_vacancies = ss_api.get_vacancies()
+	
+	# print(hh_vacancies)
+	# print(ss_vacancies)
 
 if __name__ == '__main__':
 	main()

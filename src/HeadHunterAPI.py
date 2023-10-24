@@ -27,6 +27,7 @@ class HeadHunterAPI(AbstractAPI):
 			"keyword": "python",
 			"archive": False,
 		}
+		
 	
 	def get_vacancies(self):
 		'''
@@ -34,8 +35,16 @@ class HeadHunterAPI(AbstractAPI):
 		:return:
 		'''
 		
-		r = requests.get(self.url, params=self.params)
-		return r.content.decode('utf-8')
-
-
+		r = requests.get(self.url, headers=self.headers, params=self.params).json()
+		# r = requests.get(self.url, params=self.params)
+		#r_data = json.load(r.text)
+		return r
+	
+	def save_vacancies(self):
+		'''
+		Сохраняем в файл вакансии
+		:return:
+		'''
+		pass
+		
 ##########################################################################################################
