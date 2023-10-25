@@ -105,7 +105,7 @@ class AbstractAPI(ABC):
 			name_file = os.path.join('..', name_file)
 		
 		with open(name_file, "w", encoding='utf-8') as f:
-			json.dump(self.json_data, f)
+			json.dump(self.json_data, f, indent=4, ensure_ascii=False)
 		
 	
 	
