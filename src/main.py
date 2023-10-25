@@ -19,13 +19,13 @@ def main():
 	'''
 	
 	hh_api = HeadHunterAPI()
-	ss_api = SuperJobAPI()
+	sj_api = SuperJobAPI()
 	
-	hh_vacancies = hh_api.get_vacancies()
-	ss_vacancies = ss_api.get_vacancies()
+	hh_api.get_vacancies('Python')
+	sj_api.get_vacancies('Python')
 	
-	# print(hh_vacancies)
-	# print(ss_vacancies)
+	hh_api.save_vacancies()
+	sj_api.save_vacancies()
 
 if __name__ == '__main__':
 	main()

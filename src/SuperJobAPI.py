@@ -7,6 +7,8 @@
 from AbstractAPI import AbstractAPI
 import requests
 import os
+from data.config import sj_file_vacantions, sj_url
+
 
 class SuperJobAPI(AbstractAPI):
 	'''
@@ -18,7 +20,7 @@ class SuperJobAPI(AbstractAPI):
 		Инициируем класс доступа к superjob.ru
 		'''
 		
-		super().__init__('https://api.superjob.ru/2.0/vacancies')
+		super().__init__(sj_url, sj_file_vacantions)
 		
 		# API_KEY скопирован из гугла и вставлен в переменные окружения
 		self.app_id: str = os.getenv('APP_ID_SUPERJOB')
@@ -28,21 +30,4 @@ class SuperJobAPI(AbstractAPI):
 			"X-Api-App-Id": self.secret_key,
 		}
 		
-		self.params = {
-			"count": 100,
-			"page": 0,
-			"keyword": "python",
-			"archive": False,
-		}
-		
-	def get_vacancies(self):
-		'''
-		Получение списка вакансий с сайта
-		:return:
-		'''
-		
-		r = requests.get(self.url, headers=self.headers, params=self.params).json()
-		return r
-		
-
 ##########################################################################################################
