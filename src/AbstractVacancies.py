@@ -31,9 +31,23 @@ class AbstractVacancies(ABC):
 		Инициализатор вакансий
 		'''
 		
-		self.name = ''
-		self.link = ''
+		self.__name = ''
+		self.__link = ''
+		self.__salary = 0
+		self.__description = ''
+		self.__requirements = ''
 		
-		pass
+	def __str__(self) -> str:
+		'''
+		Магический метод.
+		
+		Возвращаем строку с данными по вакансии.
+		Формируется "красивый" вывод
+		:return -> str: строка с данными вакансии (конкретной или всех сразу?)
+		'''
+		my_str = self.__name + self.__link
+		return my_str
+	
+	
 
 ##########################################################################################################
