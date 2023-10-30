@@ -19,6 +19,16 @@ class HeadHunterAPI(AbstractAPI):
 		'''
 		
 		super().__init__(hh_url, hh_file_vacantions)
-		
-	
+		self.params = ['text', 'python']
+
+	def get_vacancies(self, name_work: str):
+		'''
+		Возвращает список вакансий.
+
+		:return: Список полученных с сайта вакансий
+		'''
+
+		self.params = ['text', name_work]
+		super().get_vacancies()
+
 ##########################################################################################################

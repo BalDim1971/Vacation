@@ -34,10 +34,9 @@ class AbstractAPI(ABC):
 		self.__url = url
 		self.headers = {}
 		
-		self.params = {
+		self.__params = {
 			"count": 100,
 			"page": 0,
-			"keyword": "python",
 			"archive": False,
 		}
 		
@@ -63,7 +62,28 @@ class AbstractAPI(ABC):
 		'''
 		
 		self.__url = url
-	
+
+	@property
+	def params(self):
+		'''
+		Возвращает значение приватной переменной - словаря параметров запроса
+		:return: параметры запроса
+		'''
+
+		return self.__params
+
+	@params.setter
+	def params(self, sl_keyword):
+		'''
+		Устанавливаем новое значение ключа поиска.
+		Абстрактный?
+
+		Параметр:
+		url: keyword - новый ключ поиска
+		'''
+
+		self.__params[sl_keyword[0]] = sl_keyword[1]
+
 	@property
 	def name_file(self):
 		'''
@@ -84,14 +104,13 @@ class AbstractAPI(ABC):
 		
 		self.__name_file = name_file
 	
-	def get_vacancies(self, name_work: str):
+	def get_vacancies(self, name_work: str = ''):
 		'''
 		Возвращает список вакансий.
 		
 		:return: Список полученных с сайта вакансий
 		'''
 		
-		self.params['keyword'] = name_work
 		self.json_data = requests.get(self.url, headers=self.headers, params=self.params).json()
 	
 	def save_vacancies(self):
