@@ -43,4 +43,5 @@ def user_interaction():
     print('\nВведите ключевые слова для фильтрации вакансий, через пробел')
     filter_words = input("Ключевые слова: ").split()
 
+    # Вернуть введенные данные
     return my_choice, my_keyword, my_top, filter_words
