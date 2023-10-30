@@ -43,6 +43,7 @@ def main():
 		sj_api.get_vacancies(my_choice[1])
 		sj_api.save_vacancies()
 
+
 if __name__ == '__main__':
 	main()
 

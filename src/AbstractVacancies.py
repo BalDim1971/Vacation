@@ -38,6 +38,7 @@ class AbstractVacancies(ABC):
 		self.__description = ''
 		self.__requirements = ''
 		
+	@property
 	def __str__(self) -> str:
 		'''
 		Магический метод.
@@ -52,7 +53,6 @@ class AbstractVacancies(ABC):
 		my_str += f'Требования: {self.__requirements}'
 
 		return my_str
-	
-	
+
 
 ##########################################################################################################
