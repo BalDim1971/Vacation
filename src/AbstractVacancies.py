@@ -33,7 +33,8 @@ class AbstractVacancies(ABC):
 		
 		self.__name = ''
 		self.__link = ''
-		self.__salary = 0
+		self.__salary_min = 0
+		self.__salary_max = 0
 		self.__description = ''
 		self.__requirements = ''
 		
@@ -45,7 +46,11 @@ class AbstractVacancies(ABC):
 		Формируется "красивый" вывод
 		:return -> str: строка с данными вакансии (конкретной или всех сразу?)
 		'''
-		my_str = self.__name + self.__link
+		my_str = f'Наименование вакансии: {self.__name} ссылка: {self.__link}\n'
+		my_str += f'Диапазон зарплат: от {self.__salary_min} до {self.__salary_max}\n'
+		my_str += f'Описание: {self.__description}\n'
+		my_str += f'Требования: {self.__requirements}'
+
 		return my_str
 	
 	
