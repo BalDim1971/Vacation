@@ -24,7 +24,7 @@ class AbstractAPI(ABC):
 	__name_file: str - имя файла для сохранения данных
 	'''
 	
-	def __init__(self, url: str, name_file: str):
+	def __init__(self, url: str, name_file: str, params):
 		'''
 		Инициируем базовый класс.
 		
@@ -34,12 +34,8 @@ class AbstractAPI(ABC):
 		self.__url = url
 		self.headers = {}
 		
-		self.__params = {
-			"count": 100,
-			"page": 0,
-			"archive": False,
-		}
-		
+		self.__params = params
+
 		self.json_data = {}
 		self.__name_file = name_file
 		
@@ -62,27 +58,6 @@ class AbstractAPI(ABC):
 		'''
 		
 		self.__url = url
-
-	@property
-	def params(self):
-		'''
-		Возвращает значение приватной переменной - словаря параметров запроса
-		:return: параметры запроса
-		'''
-
-		return self.__params
-
-	@params.setter
-	def params(self, sl_keyword):
-		'''
-		Устанавливаем новое значение ключа поиска.
-		Абстрактный?
-
-		Параметр:
-		url: keyword - новый ключ поиска
-		'''
-
-		self.__params[sl_keyword[0]] = sl_keyword[1]
 
 	@property
 	def name_file(self):
@@ -111,12 +86,14 @@ class AbstractAPI(ABC):
 		:return: Список полученных с сайта вакансий
 		'''
 		
-		self.json_data = requests.get(self.url, headers=self.headers, params=self.params).json()
+		self.json_data = requests.get(self.url, headers=self.headers, params=self.__params).json()
+		return self.json_data
 	
 	def save_vacancies(self):
 		'''
 		Сохранение в файл списка вакансий.
-		
+
+		Проверяем наличие нужного каталога, если нет, переходим на уровень выше.
 		'''
 		
 		name_file = self.__name_file
