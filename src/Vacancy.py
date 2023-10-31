@@ -26,6 +26,13 @@ class Vacancy:
 	def __init__(self, name, link, salary_min, salary_max, description, requirements):
 		'''
 		Инициализатор вакансий
+		
+		:param name: наименование вакансии
+		:param link: ссылка на вакансию
+		:param salary_min: минимальная зарплата
+		:param salary_max: максимальная зарплата
+		:param description: описание вакансии
+		:param requirements: требования
 		'''
 		
 		self.__name = name
