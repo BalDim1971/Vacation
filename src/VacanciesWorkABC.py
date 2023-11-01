@@ -6,7 +6,7 @@
 
 # Подключаем необходимые модули
 
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import List, Any
 
 from Vacancy import Vacancy
@@ -94,3 +94,15 @@ class VacanciesWorkABC(ABC):
 		'''
 		
 		return self.__vacancies
+
+	@abstractmethod
+	def load_vacancies(self):
+		'''
+		Абстрактный метод.
+		Читает из файла данные и возвращает список вакансий в обработанном виде.
+		Должен быть переопределен в наследниках
+
+		:return: Список вакансий в обработанном виде
+		'''
+		pass
+
