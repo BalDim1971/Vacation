@@ -6,8 +6,7 @@
 
 # Подключаем необходимые модули
 
-from abc import ABC
-import requests
+from abc import ABC, abstractmethod
 import json
 import os
 
@@ -24,7 +23,7 @@ class AbstractAPI(ABC):
 	__name_file: str - имя файла для сохранения данных
 	'''
 	
-	def __init__(self, url: str, name_file: str, params):
+	def __init__(self, url: str, name_file: str):
 		'''
 		Инициируем базовый класс.
 		
@@ -32,10 +31,6 @@ class AbstractAPI(ABC):
 		url: str - адрес сайта вакансий
 		'''
 		self.__url = url
-		self.headers = {}
-		
-		self.__params = params
-
 		self.json_data = {}
 		self.__name_file = name_file
 		
@@ -79,15 +74,16 @@ class AbstractAPI(ABC):
 		
 		self.__name_file = name_file
 	
-	def get_vacancies(self, name_work: str = ''):
+	@abstractmethod
+	def get_vacancies(self):
 		'''
+		Абстрактный метод.
 		Возвращает список вакансий.
+		Должен быть переопределен в наследниках
 		
 		:return: Список полученных с сайта вакансий
 		'''
-		
-		self.json_data = requests.get(self.url, headers=self.headers, params=self.__params).json()
-		return self.json_data
+		pass
 	
 	def save_vacancies(self):
 		'''

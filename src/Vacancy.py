@@ -32,7 +32,9 @@ class Vacancy:
 		:param salary_min: минимальная зарплата
 		:param salary_max: максимальная зарплата
 		:param description: описание вакансии
-		:param requirements: требования
+		:param requirements: требования.
+		
+		Добавить id вакансии ???
 		'''
 		
 		self.__name = name
