@@ -10,6 +10,7 @@
 from SuperJobAPI import SuperJobAPI
 from HeadHunterAPI import HeadHunterAPI
 from service import user_interaction
+from Vacancy import Vacancy
 
 
 def main():
@@ -36,12 +37,17 @@ def main():
 		hh_api = HeadHunterAPI(my_choice[1])
 		hh_api.get_vacancies()
 		hh_api.save_vacancies()
+		list_dict = hh_api.load_vacancies()
+		for i in range(int(my_choice[2])):
+			print(list_dict[i])
 
 	# Наличие выбора superjob.ru
 	if my_choice[0] in (2,3):
 		sj_api = SuperJobAPI(my_choice[1])
 		sj_api.get_vacancies()
 		sj_api.save_vacancies()
+
+	# Вызвать функцию отображения данных о полученной информации
 	
 
 if __name__ == '__main__':

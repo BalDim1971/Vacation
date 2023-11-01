@@ -41,22 +41,32 @@ class Vacancy:
 		self.__link = link
 		self.__salary_min = salary_min
 		self.__salary_max = salary_max
-		self.__description = description
-		self.__requirements = requirements
-	
-	@property
+		self.__description = description if not (description is None ) else 'Не указано'
+		self.__requirements = requirements.replace('<highlighttext>','')
+		self.__requirements = self.__requirements.replace('</highlighttext>','')
+
+	# @property
 	def __str__(self) -> str:
 		'''
 		Магический метод.
 		
 		Возвращаем строку с данными по вакансии.
 		Формируется "красивый" вывод
-		:return -> str: строка с данными вакансии (конкретной или всех сразу?)
+		:return -> str: строка с данными вакансии.
+		Требуется доработать для корректного вывода зарплат
 		'''
-		my_str = f'Наименование вакансии: {self.__name} ссылка: {self.__link}\n'
-		my_str += f'Диапазон зарплат: от {self.__salary_min} до {self.__salary_max}\n'
+		my_str = f'Наименование вакансии: {self.__name}\n'
+		my_str += f'Ссылка на вакансию: {self.__link}\n'
+		my_str += f'Зарплата: '
+		if self.__salary_min == 0 and self.__salary_max == 0:
+			my_str += f'по договоренности'
+		if self.__salary_min != 0:
+			my_str += f'от {self.__salary_min} '
+		if self.__salary_max != 0:
+			my_str += f'до {self.__salary_max}'
+		my_str += '\n'
 		my_str += f'Описание: {self.__description}\n'
-		my_str += f'Требования: {self.__requirements}'
+		my_str += f'Требования: {self.__requirements}\n'
 		
 		return my_str
 	
