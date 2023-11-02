@@ -25,6 +25,9 @@ def main():
 	6. Запрашиваем у пользователя данные по отображению вакансий
 	'''
 	
+	# Описываем переменные
+	list_dict = []
+	
 	# Основная работа с пользовательскими данными
 	my_choice = user_interaction()
 
@@ -37,18 +40,20 @@ def main():
 		hh_api = HeadHunterAPI(my_choice[1])
 		hh_api.get_vacancies()
 		hh_api.save_vacancies()
-		list_dict = hh_api.load_vacancies()
-		for i in range(int(my_choice[2])):
-			print(list_dict[i])
+		list_dict += hh_api.load_vacancies()
 
 	# Наличие выбора superjob.ru
 	if my_choice[0] in (2,3):
 		sj_api = SuperJobAPI(my_choice[1])
 		sj_api.get_vacancies()
 		sj_api.save_vacancies()
+		list_dict += sj_api.load_vacancies()
 
 	# Вызвать функцию отображения данных о полученной информации
-	
+	list_dict.sort(reverse=True)
+	for i in range(int(my_choice[2])):
+		print(list_dict[i])
+
 
 if __name__ == '__main__':
 	main()

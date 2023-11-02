@@ -9,6 +9,7 @@ from AbstractAPI import AbstractAPI
 from data.config import hh_file_vacantions, hh_url
 from Vacancy import Vacancy
 
+
 class HeadHunterAPI(AbstractAPI):
 	'''
 	Класс реализует доступ через API к сайту с вакансиями hh.ru
@@ -63,7 +64,6 @@ class HeadHunterAPI(AbstractAPI):
 			vacancy = Vacancy(name, url_job, salary_from, salary_to, description, requirement)
 			list_dict.append(vacancy)
 
-		list_dict.sort(reverse=True)
 		# for i in range(5):
 		# 	print(f'{i} вакансия: \n{list_dict[i]}')
 		return list_dict
