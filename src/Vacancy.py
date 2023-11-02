@@ -42,11 +42,7 @@ class Vacancy:
 		self.__salary_min = salary_min
 		self.__salary_max = salary_max
 		self.__description = description if not (description is None ) else 'Не указано'
-		if not (requirements is None) and requirements.find('<highlighttext>'):
-			self.__requirements = requirements.replace('<highlighttext>','')
-			self.__requirements = self.__requirements.replace('</highlighttext>','')
-		else:
-			self.__requirements = requirements
+		self.__requirements = requirements
 
 	# @property
 	def __str__(self) -> str:

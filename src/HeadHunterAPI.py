@@ -59,8 +59,17 @@ class HeadHunterAPI(AbstractAPI):
 					salary_from = int(item['salary']['from'])
 				if not (item['salary']['to'] is None):
 					salary_to = int(item['salary']['to'])
+
 			description = item['snippet']['responsibility']
+			if not (description is None) and description.find('<highlighttext>'):
+				for source in ('<highlighttext>', '</highlighttext>'):
+					description = description.replace(source, '')
+
 			requirement = item['snippet']['requirement']
+			if not (requirement is None) and requirement.find('<highlighttext>'):
+				for source in ('<highlighttext>', '</highlighttext>'):
+					requirement = requirement.replace(source, '')
+
 			vacancy = Vacancy(name, url_job, salary_from, salary_to, description, requirement)
 			list_dict.append(vacancy)
 
