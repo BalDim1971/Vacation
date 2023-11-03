@@ -7,7 +7,7 @@
 '''
 ##############################################################################################################
 
-from data.config import hh_file_vacantions, sj_file_vacantions
+from data.config import hh_file_vacantions, sj_file_vacantions, my_files
 import os
 
 
@@ -23,14 +23,18 @@ def test_files():
 	'''
 	
 	count_files = 0
-	my_files = (hh_file_vacantions, sj_file_vacantions)
 	for i in range(2):
 		name_file = my_files[i]
+
+		# Нет каталога, пробуем подняться на уровень выше
 		if not os.path.exists('data'):
 			name_file = os.path.join('..', name_file)
-			if not os.path.exists(name_file) or not os.path.isfile(name_file):
-				continue
-			count_files += (i + 1)
+
+		# Проверяем наличие файла по списку
+		if not os.path.exists(name_file) or not os.path.isfile(name_file):
+			continue
+
+		count_files += (i + 1)
 	
 	return count_files
 
@@ -49,16 +53,16 @@ def internet_or_file(count_files):
 	if count_files > 0:
 		print(f'В наличии есть файлы:')
 		if count_files in (1, 3):
-			print(f'с данными с сайта hh.ru {hh_file_vacantions}')
+			print(f'с данными с сайта hh.ru {my_files[0]}')
 		if count_files in (2, 3):
-			print(f'с данными с сайта superjob.ru {sj_file_vacantions}')
+			print(f'с данными с сайта superjob.ru {my_files[1]}')
 		
 		# Запросить, откуда берем данные: из интернета или из файла ранее загруженного
-		print('Запрашиваем данные из интернета или обрабатываем файл?')
+		print('\nЗапрашиваем данные из интернета или обрабатываем файлы?')
 		print('1 - работаем с интернетом')
 		print('2 - работаем с файлами')
 		print('0 - прекращение работы скрипта')
-		my_work = int(input())
+		my_work = int(input('Введите 1, 2 или 0 и нажмите Enter: '))
 		return my_work
 	
 	return 1
@@ -73,19 +77,28 @@ def get_platforms(count_files, my_work):
 	:param my_work: откуда берем данные: 1 - интернет, 2 - файл
 	:return: условный номер платформ: 1(hh), 2(sj), 3(обе вместе)
 	'''
-	
+
 	# Запросить платформы hh, superjob или обе
-	print('Выберите платформы для получения вакансий:')
-	print('1 - hh.ru')
-	print('2 - superjob.ru')
-	print('3 - обе платформы')
-	print('0 - прекращение работы скрипта')
-	print('Введите 1,2,3 или 0 и нажмите Enter')
-	my_choice = int(input())
-	
-	if my_choice == 0:
-		return 0
-	
+	if my_work == 1:
+		print('\nВыберите платформы для получения вакансий:')
+		print('1 - HeadHunter (hh.ru)')
+		print('2 - SuperJob (superjob.ru)')
+		print('3 - обе платформы')
+		print('0 - прекращение работы скрипта')
+		my_choice = int(input('Введите 1,2,3 или 0 и нажмите Enter: '))
+	else:
+		if count_files in (1, 2):
+			print(f'\nВ наличии только {my_files[count_files-1]}')
+			input('Для продолжения нажмите Enter')
+			return count_files
+
+		print('\nВыберите источники информации:')
+		print(f'1 - HeadHunter {my_files[0]}')
+		print(f'2 - SuperJob {my_files[1]}')
+		print('3 - оба файла')
+		print('0 - прекращение работы скрипта')
+		my_choice = int(input('Введите 1,2,3 или 0 и нажмите Enter: '))
+
 	return my_choice
 
 
@@ -111,12 +124,15 @@ def user_interaction():
 	
 	# Проверяем наличие файлов с предыдущим запросом
 	count_files = test_files()
-	print(count_files)
-	
+
+	# Получаем откуда берем данные
+	# Должно вернуть 1(интернет), 2(файлы) или 0
 	my_work = internet_or_file(count_files)
 	if my_work == 0:
 		return 0
-	
+
+	# Пытаемся получить платформу с которой работаем
+	# Должно вернуть 1(hh), 2(sj), 3(hh+sj) или 0
 	my_choice = get_platforms(count_files, my_work)
 	if my_choice == 0:
 		return 0

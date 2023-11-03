@@ -48,25 +48,5 @@ class SuperJobAPI(AbstractAPI):
 		self.json_data = requests.get(self.url, headers=self.__headers, params=self.__params).json()
 		return self.json_data
 	
-	def load_vacancies(self):
-		'''
-		Обрабатывает вакансии, полученные с сайта, м приводит их к стандартизованному виду.
-
-		:return: Список вакансий в обработанном виде
-		'''
-
-		list_dict = []
-		for item in self.json_data['objects']:
-			name = item['profession']
-			url_job = item['link']
-			salary_from = item['payment_from']
-			salary_to = item['payment_to']
-			description = item['candidat']
-			requirement = None
-			vacancy = Vacancy(name, url_job, salary_from, salary_to, description, requirement)
-			list_dict.append(vacancy)
-
-		return list_dict
-	
 
 ##########################################################################################################

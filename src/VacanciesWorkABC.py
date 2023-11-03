@@ -8,8 +8,8 @@
 
 from abc import ABC, abstractmethod
 from typing import List, Any
-
-from Vacancy import Vacancy
+import json
+from src.Vacancy import Vacancy
 
 
 class VacanciesWorkABC(ABC):
@@ -43,7 +43,8 @@ class VacanciesWorkABC(ABC):
 		self.__vacancies = []
 		self.__name_file = name_file
 		self.__params = params
-		
+		self.json_data = []
+
 	def append(self, vacancy):
 		'''
 		Добавляем в список одну новую вакансию
@@ -95,6 +96,28 @@ class VacanciesWorkABC(ABC):
 		
 		return self.__vacancies
 
+	@property
+	def params(self):
+		'''
+		Возвращаем параметры поиска
+
+		:return: Список слов для поиска
+		'''
+
+		return self.__params
+
+	def read_files(self):
+		'''
+		Прочитать файл с исходными данными вакансий в json-формате
+
+		:return: Вернуть массив информации в json-формате
+		'''
+
+		with open(self.__name_file, "r", encoding='utf-8') as f:
+			self.json_data = json.load(f)
+
+		return self.json_data
+
 	@abstractmethod
 	def load_vacancies(self):
 		'''
@@ -106,3 +129,4 @@ class VacanciesWorkABC(ABC):
 		'''
 		pass
 
+##########################################################################################################

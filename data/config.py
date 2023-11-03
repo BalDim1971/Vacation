@@ -9,11 +9,13 @@
 #########################################################
 
 import os
+from typing import Tuple
 
 hh_url = 'https://api.hh.ru/vacancies'
 sj_url = 'https://api.superjob.ru/2.0/vacancies'
 
 hh_file_vacantions = os.path.join('data', 'hh_vacancy.json')
 sj_file_vacantions = os.path.join('data', 'sj_vacancy.json')
+my_files: tuple[str, str] = (hh_file_vacantions, sj_file_vacantions)
 
 #########################################################

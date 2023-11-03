@@ -23,7 +23,7 @@ class Vacancy:
 	проверка данных (с какими значениями?)
 	'''
 	
-	def __init__(self, name, link, salary_min, salary_max, description, requirements: str):
+	def __init__(self, name, link, salary_min, salary_max, currency, description, requirements: str):
 		'''
 		Инициализатор вакансий
 		
@@ -41,7 +41,15 @@ class Vacancy:
 		self.__link = link
 		self.__salary_min = salary_min
 		self.__salary_max = salary_max
+		self.__currency = currency
+		if not (description is None) and description.find('highlighttext'):
+			for source in ('<highlighttext>', '</highlighttext>'):
+				description = description.replace(source, '')
 		self.__description = description if not (description is None ) else 'Не указано'
+
+		if not (requirements is None) and requirements.find('highlighttext'):
+			for source in ('<highlighttext>', '</highlighttext>'):
+				requirements = requirements.replace(source, '')
 		self.__requirements = requirements
 
 	# @property
@@ -65,7 +73,8 @@ class Vacancy:
 			my_str += f'до {self.__salary_max}'
 		my_str += '\n'
 		my_str += f'Описание: {self.__description}\n'
-		my_str += f'Требования: {self.__requirements}\n'
+		if self.__requirements != '':
+			my_str += f'Требования: {self.__requirements}\n'
 		
 		return my_str
 	
