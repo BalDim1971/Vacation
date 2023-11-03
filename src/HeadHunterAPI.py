@@ -5,9 +5,9 @@
 ##########################################################################################################
 
 import requests
-from AbstractAPI import AbstractAPI
+from src.AbstractAPI import AbstractAPI
 from data.config import hh_file_vacantions, hh_url
-from Vacancy import Vacancy
+from src.Vacancy import Vacancy
 
 
 class HeadHunterAPI(AbstractAPI):
@@ -33,9 +33,7 @@ class HeadHunterAPI(AbstractAPI):
 		'''
 		Получает с сайта вакансии.
 
-		Возвращает необработанный список вакансий.
-
-		:return: Список полученных с сайта вакансий
+		:return: Список полученных с сайта вакансий в первоначальном виде
 		'''
 		
 		self.json_data = requests.get(self.url, params=self.__params).json()
@@ -43,7 +41,7 @@ class HeadHunterAPI(AbstractAPI):
 
 	def load_vacancies(self):
 		'''
-		Возвращает список вакансий в обработанном виде.
+		Обрабатывает вакансии, полученные с сайта, м приводит их к стандартизованному виду.
 
 		:return: Список вакансий в обработанном виде
 		'''

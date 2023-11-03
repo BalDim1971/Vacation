@@ -7,10 +7,9 @@
 '''
 ##############################################################################################################
 
-from SuperJobAPI import SuperJobAPI
-from HeadHunterAPI import HeadHunterAPI
-from service import user_interaction
-from Vacancy import Vacancy
+from src.SuperJobAPI import SuperJobAPI
+from src.HeadHunterAPI import HeadHunterAPI
+from src.service import user_interaction
 
 
 def main():

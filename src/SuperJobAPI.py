@@ -4,11 +4,11 @@
 '''
 ##########################################################################################################
 
-from AbstractAPI import AbstractAPI
+from src.AbstractAPI import AbstractAPI
 import requests
 import os
 from data.config import sj_file_vacantions, sj_url
-from Vacancy import Vacancy
+from src.Vacancy import Vacancy
 
 
 class SuperJobAPI(AbstractAPI):
@@ -42,9 +42,7 @@ class SuperJobAPI(AbstractAPI):
 		'''
 		Получает с сайта вакансии.
 
-		Возвращает необработанный список вакансий.
-
-		:return: Список полученных с сайта вакансий
+		:return: Список полученных с сайта вакансий в первоначальном виде
 		'''
 		
 		self.json_data = requests.get(self.url, headers=self.__headers, params=self.__params).json()
@@ -52,7 +50,7 @@ class SuperJobAPI(AbstractAPI):
 	
 	def load_vacancies(self):
 		'''
-		Возвращает список вакансий в обработанном виде.
+		Обрабатывает вакансии, полученные с сайта, м приводит их к стандартизованному виду.
 
 		:return: Список вакансий в обработанном виде
 		'''
@@ -68,8 +66,6 @@ class SuperJobAPI(AbstractAPI):
 			vacancy = Vacancy(name, url_job, salary_from, salary_to, description, requirement)
 			list_dict.append(vacancy)
 
-		# for i in range(5):
-		# 	print(f'{i} вакансия: \n{list_dict[i]}')
 		return list_dict
 	
 

@@ -60,6 +60,8 @@ def internet_or_file(count_files):
 		print('0 - прекращение работы скрипта')
 		my_work = int(input())
 		return my_work
+	
+	return 1
 
 
 def get_platforms(count_files, my_work):
@@ -72,7 +74,19 @@ def get_platforms(count_files, my_work):
 	:return: условный номер платформ: 1(hh), 2(sj), 3(обе вместе)
 	'''
 	
-	return 0
+	# Запросить платформы hh, superjob или обе
+	print('Выберите платформы для получения вакансий:')
+	print('1 - hh.ru')
+	print('2 - superjob.ru')
+	print('3 - обе платформы')
+	print('0 - прекращение работы скрипта')
+	print('Введите 1,2,3 или 0 и нажмите Enter')
+	my_choice = int(input())
+	
+	if my_choice == 0:
+		return 0
+	
+	return my_choice
 
 
 def user_interaction():
@@ -93,26 +107,19 @@ def user_interaction():
 	'''
 	
 	# Инициируем переменные
-	my_work = 0
 	my_keyword = ''
 	
 	# Проверяем наличие файлов с предыдущим запросом
 	count_files = test_files()
+	print(count_files)
 	
 	my_work = internet_or_file(count_files)
 	if my_work == 0:
 		return 0
 	
-	# Запросить платформы hh, superjob или обе
-	print('Выберите платформы для получения вакансий:')
-	print('1 - hh.ru')
-	print('2 - superjob.ru')
-	print('3 - обе платформы')
-	print('0 - прекращение работы скрипта')
-	print('Введите 1,2,3 или 0 и нажмите Enter')
-	my_choice = int(input())
+	my_choice = get_platforms(count_files, my_work)
 	if my_choice == 0:
-		exit(0)
+		return 0
 	
 	# Если работаем с интернетом, запрашиваем ключевое слово для поиска
 	if my_work == 1:
