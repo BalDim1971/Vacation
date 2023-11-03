@@ -66,14 +66,18 @@ class Vacancy:
 		my_str += f'Ссылка на вакансию: {self.__link}\n'
 		my_str += f'Зарплата: '
 		if self.__salary_min == 0 and self.__salary_max == 0:
-			my_str += f'по договоренности'
+			my_str += f'по договоренности, в '
 		if self.__salary_min != 0:
 			my_str += f'от {self.__salary_min} '
 		if self.__salary_max != 0:
-			my_str += f'до {self.__salary_max}'
+			my_str += f'до {self.__salary_max} '
+		if 'RUR' in self.__currency or 'rub' in self.__currency:
+			my_str += 'руб.'
+		else:
+			my_str += self.__currency.lstrip()
 		my_str += '\n'
 		my_str += f'Описание: {self.__description}\n'
-		if self.__requirements != '':
+		if self.__requirements != '' and not (self.__requirements is None):
 			my_str += f'Требования: {self.__requirements}\n'
 		
 		return my_str
