@@ -71,8 +71,6 @@ def main():
 	count_vacancies = len(list_dict) if len(list_dict) < my_choice[2] else my_choice[2]
 	print(f'По вашему запросу {my_choice[1]} {", ".join(my_choice[4])}')
 	print(f'найдено {count_vacancies} вакансий')
-	if count_vacancies == 0:
-		return
 	for i in range(count_vacancies):
 		print(list_dict[i])
 
