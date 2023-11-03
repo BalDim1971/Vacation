@@ -4,9 +4,9 @@
 '''
 ##########################################################################################################
 
-from AbstractAPI import AbstractAPI
 import requests
-import os
+from src.AbstractAPI import AbstractAPI
+from data.config import hh_file_vacantions, hh_url
 
 
 class HeadHunterAPI(AbstractAPI):
@@ -14,15 +14,29 @@ class HeadHunterAPI(AbstractAPI):
 	Класс реализует доступ через API к сайту с вакансиями hh.ru
 	'''
 	
-	def __init__(self):
+	def __init__(self, keyword: str):
 		'''
 		Инициируем класс доступа к hh.ru
 		'''
 		
-		super().__init__('https://api.hh.ru/vacancies')
+		self.__params = {
+			"items_on_page": 200,
+			"page": 0,
+			"archive": False,
+			"text": keyword
+		}
 		
-		r = requests.get(self.url)
-		print(r.content.decode('utf-8'))
+		super().__init__(hh_url, hh_file_vacantions)
+	
+	def get_vacancies(self):
+		'''
+		Получает с сайта вакансии.
+
+		:return: Список полученных с сайта вакансий в первоначальном виде
+		'''
+		
+		self.json_data = requests.get(self.url, params=self.__params).json()
+		return self.json_data
 
 
-##########################################################################################################
+##################################################################################################

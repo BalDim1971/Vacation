@@ -4,39 +4,49 @@
 '''
 ##########################################################################################################
 
-from AbstractAPI import AbstractAPI
+from src.AbstractAPI import AbstractAPI
 import requests
 import os
+from data.config import sj_file_vacantions, sj_url
+from src.Vacancy import Vacancy
+
 
 class SuperJobAPI(AbstractAPI):
 	'''
 	Класс реализует доступ через API к сайту с вакансиями superjob.ru
 	'''
 	
-	def __init__(self):
+	def __init__(self, keyword: str):
 		'''
 		Инициируем класс доступа к superjob.ru
 		'''
 		
-		super().__init__('https://api.superjob.ru/2.0/vacancies')
+		self.__params = {
+			"count": 200,
+			"page": '',
+			"archive": False,
+			"keyword": keyword
+		}
+		
+		super().__init__(sj_url, sj_file_vacantions)
 		
 		# API_KEY скопирован из гугла и вставлен в переменные окружения
 		self.app_id: str = os.getenv('APP_ID_SUPERJOB')
 		self.secret_key: str = os.getenv('API_KEY_SUPERJOB')
 		
-		self.headers = {
+		self.__headers = {
 			"X-Api-App-Id": self.secret_key,
 		}
+	
+	def get_vacancies(self):
+		'''
+		Получает с сайта вакансии.
+
+		:return: Список полученных с сайта вакансий в первоначальном виде
+		'''
 		
-		self.params = {
-			"count": 100,
-			"page": 0,
-			"keyword": "python",
-			"archive": False,
-		}
-		
-		r = requests.get(self.url, headers=self.headers)
-		print(r.content.decode('utf-8'))
+		self.json_data = requests.get(self.url, headers=self.__headers, params=self.__params).json()
+		return self.json_data
 	
 
 ##########################################################################################################
