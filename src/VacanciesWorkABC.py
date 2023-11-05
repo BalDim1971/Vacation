@@ -9,7 +9,7 @@
 from abc import ABC, abstractmethod
 from typing import List, Any
 import json
-from src.Vacancy import Vacancy
+from src.service import load_one_file
 
 
 class VacanciesWorkABC(ABC):
@@ -30,7 +30,6 @@ class VacanciesWorkABC(ABC):
 	Дополнительно (по желанию):
 	заложить возможность расширения класса для работы с другими форматами, например с CSV-, Excel- или TXT-файлом
 	'''
-	__vacancies: list[Vacancy]
 	
 	def __init__(self, name_file, params):
 		'''
@@ -117,7 +116,7 @@ class VacanciesWorkABC(ABC):
 			self.json_data = json.load(f)
 
 		return self.json_data
-
+	
 	@abstractmethod
 	def load_vacancies(self):
 		'''
@@ -127,6 +126,17 @@ class VacanciesWorkABC(ABC):
 
 		:return: Список вакансий в обработанном виде
 		'''
+		
+		pass
+	
+	@abstractmethod
+	def save_processed_vacancies_json(self):
+		'''
+		Абстрактный метод.
+		Записать в файл данные в обработанном виде.
+		Должен быть переопределен в наследниках
+		'''
+		
 		pass
 
 ##########################################################################################################

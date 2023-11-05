@@ -54,6 +54,7 @@ def main():
 		hh_vacancies = HeadHunterVacancies(my_choice[4])
 		hh_vacancies.read_files()
 		list_dict += hh_vacancies.load_vacancies()
+		hh_vacancies.save_processed_vacancies_json()
 
 	# Наличие выбора superjob.ru
 	if my_choice[0] in (2,3):
@@ -65,12 +66,13 @@ def main():
 		sj_vacancies = SuperJobVacancies(my_choice[4])
 		sj_vacancies.read_files()
 		list_dict += sj_vacancies.load_vacancies()
+		sj_vacancies.save_processed_vacancies_json()
 
 	# Вызвать функцию отображения данных о полученной информации
 	list_dict.sort(reverse=True)
 	count_vacancies = len(list_dict) if len(list_dict) < my_choice[2] else my_choice[2]
 	print(f'По вашему запросу {my_choice[1]} {", ".join(my_choice[4])}')
-	print(f'найдено {count_vacancies} вакансий')
+	print(f'найдено {count_vacancies} вакансий\n')
 	for i in range(count_vacancies):
 		print(list_dict[i])
 

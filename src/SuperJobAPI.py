@@ -7,8 +7,7 @@
 from src.AbstractAPI import AbstractAPI
 import requests
 import os
-from data.config import sj_file_vacantions, sj_url
-from src.Vacancy import Vacancy
+from config import sj_file_vacantions, sj_url
 
 
 class SuperJobAPI(AbstractAPI):
@@ -45,7 +44,9 @@ class SuperJobAPI(AbstractAPI):
 		:return: Список полученных с сайта вакансий в первоначальном виде
 		'''
 		
-		self.json_data = requests.get(self.url, headers=self.__headers, params=self.__params).json()
+		response = requests.get(self.url, headers=self.__headers, params=self.__params)
+		response.raise_for_status()
+		self.json_data = response.json()
 		return self.json_data
 	
 

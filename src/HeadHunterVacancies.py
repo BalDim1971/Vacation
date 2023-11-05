@@ -6,8 +6,11 @@
 ##########################################################################################################
 
 from src.VacanciesWorkABC import VacanciesWorkABC
-from data.config import hh_file_vacantions
+from config import hh_file_vacantions
 from src.Vacancy import Vacancy
+import datetime
+from src.service import save_one_file
+from dataclasses import asdict
 
 
 class HeadHunterVacancies(VacanciesWorkABC):
@@ -68,6 +71,22 @@ class HeadHunterVacancies(VacanciesWorkABC):
             self.append(vacancy)
 
         return self.vacancies
+        
+    def save_processed_vacancies_json(self):
+        '''
+        Записать в файл данные в обработанном виде в формате json.
 
+        В файл добавить строки, по которым был сделан запрос(?).
+        '''
+        
+        current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+        str_current_datetime = str(current_datetime)
+        name_file = 'hh_' + '_'.join(self.params) + '_' + str_current_datetime + '.json'
+        
+        vacancies_json = []
+        for vacan in self.vacancies:
+            vacancies_json.append(asdict(vacan))
+        
+        save_one_file(name_file, vacancies_json)
 
 ##########################################################################################################
