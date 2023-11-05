@@ -2,13 +2,101 @@
 '''
 Файл с сервисными функциями.
 
-1. Получаем от пользователя необходимые данные для поиска.
-2. Получить данные для отображения вакансий
+1. Функция записи файла с проверкой пути: save_one_file
+2. Тестирование наличия файлов предыдущих запросов: test_files
+3. Выбор источника получения данных, интернет или из файла: internet_or_file
+4. Определить, с какой платформой, hh или sj, работать: get_platforms
+5. Функция получения данных от пользователя user_interaction
 '''
 ##############################################################################################################
 
-from data.config import hh_file_vacantions, sj_file_vacantions, my_files
+from config import my_files
 import os
+import json
+
+
+def test_data_in_name_file(name_file_par: str, name_dir: str = 'data') -> str:
+	'''
+	Функция проверки имени файла на содержание в нем строки name_dir.
+
+	Функция принимает на вход имя файла и имя нужного каталога, по умолчанию 'data'.
+	Если имя файла не содержит в пути 'data', добавляем.
+	Если имя пустое, возвращаем ''.
+	Параметры:
+	:param name_file_par: имя файла, будет располагаться в каталоге name_dir, относительно текущего каталога
+	:param name_dir: имя подкаталога
+
+	:return: новое или старое имя файла, или '', если имя файла пустое?
+	'''
+	
+	pass
+
+
+def save_one_file(name_file_par: str, json_data):
+	'''
+	Функция для записи файла с проверкой наличия пути.
+	
+	Функция принимает на вход имя файла и данные для записи, json-формат
+	Если имя файла не содержит в пути 'data', добавляем.
+	Если имя пустое, возвращаем -1.
+	Параметры:
+	:param name_file_par: имя файла, будет располагаться в каталоге data, относительно текущего каталога
+	:param json_data: данные для записи
+	
+	:return: -1, если передали пустое значение
+	'''
+	
+	if name_file_par is None or len(name_file_par) == 0:
+		return -1
+	
+	name_file = name_file_par
+	path_list = name_file.split(os.sep)
+	if len(path_list) == 0:
+		return -1
+	
+	if not ('data' in path_list):
+		name_file = os.path.join('data', name_file_par)
+	
+	if not os.path.exists('data'):
+		name_file = os.path.join('..', name_file)
+	
+	with open(name_file, "w", encoding='utf-8') as f:
+		json.dump(json_data, f, indent=4, ensure_ascii=False)
+
+
+def load_one_file(name_file_par: str) -> str:
+	'''
+	Функция для чтения файла в json формате с проверкой пути.
+	
+	Функция принимает на вход имя файла.
+	Если имя файла не содержит в пути 'data', добавляем.
+	Если имя пустое, возвращаем ''.
+	Параметры:
+	:param name_file_par: имя файла, будет располагаться в каталоге data, относительно текущего каталога
+	:return: прочитанные из файла данные строка, или пусто
+	'''
+	
+	if name_file_par is None or len(name_file_par) == 0:
+		return ''
+	
+	name_file = name_file_par
+	path_list = name_file.split(os.sep)
+	if len(path_list) == 0:
+		return ''
+	
+	if not ('data' in path_list):
+		name_file = os.path.join('data', name_file_par)
+	
+	if not os.path.exists('data'):
+		name_file = os.path.join('..', name_file)
+	name_file = os.path.join('data', name_file_par)
+	if not os.path.exists('data'):
+		name_file = os.path.join('..', name_file)
+	
+	with open(name_file, "r", encoding='utf-8') as f:
+		json_data = json.load(f)
+	
+	return json_data
 
 
 def test_files():
@@ -25,15 +113,15 @@ def test_files():
 	count_files = 0
 	for i in range(2):
 		name_file = my_files[i]
-
+		
 		# Нет каталога, пробуем подняться на уровень выше
 		if not os.path.exists('data'):
 			name_file = os.path.join('..', name_file)
-
+		
 		# Проверяем наличие файла по списку
 		if not os.path.exists(name_file) or not os.path.isfile(name_file):
 			continue
-
+		
 		count_files += (i + 1)
 	
 	return count_files
@@ -77,7 +165,7 @@ def get_platforms(count_files, my_work):
 	:param my_work: откуда берем данные: 1 - интернет, 2 - файл
 	:return: условный номер платформ: 1(hh), 2(sj), 3(обе вместе)
 	'''
-
+	
 	# Запросить платформы hh, superjob или обе
 	if my_work == 1:
 		print('\nВыберите платформы для получения вакансий:')
@@ -88,17 +176,17 @@ def get_platforms(count_files, my_work):
 		my_choice = int(input('Введите 1,2,3 или 0 и нажмите Enter: '))
 	else:
 		if count_files in (1, 2):
-			print(f'\nВ наличии только {my_files[count_files-1]}')
+			print(f'\nВ наличии только {my_files[count_files - 1]}')
 			input('Для продолжения нажмите Enter')
 			return count_files
-
+		
 		print('\nВыберите источники информации:')
 		print(f'1 - HeadHunter {my_files[0]}')
 		print(f'2 - SuperJob {my_files[1]}')
 		print('3 - оба файла')
 		print('0 - прекращение работы скрипта')
 		my_choice = int(input('Введите 1,2,3 или 0 и нажмите Enter: '))
-
+	
 	return my_choice
 
 
@@ -124,13 +212,13 @@ def user_interaction():
 	
 	# Проверяем наличие файлов с предыдущим запросом
 	count_files = test_files()
-
+	
 	# Получаем откуда берем данные
 	# Должно вернуть 1(интернет), 2(файлы) или 0
 	my_work = internet_or_file(count_files)
 	if my_work == 0:
 		return 0
-
+	
 	# Пытаемся получить платформу с которой работаем
 	# Должно вернуть 1(hh), 2(sj), 3(hh+sj) или 0
 	my_choice = get_platforms(count_files, my_work)

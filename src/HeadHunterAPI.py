@@ -6,7 +6,7 @@
 
 import requests
 from src.AbstractAPI import AbstractAPI
-from data.config import hh_file_vacantions, hh_url
+from config import hh_file_vacantions, hh_url
 
 
 class HeadHunterAPI(AbstractAPI):
@@ -35,7 +35,9 @@ class HeadHunterAPI(AbstractAPI):
 		:return: Список полученных с сайта вакансий в первоначальном виде
 		'''
 		
-		self.json_data = requests.get(self.url, params=self.__params).json()
+		response = requests.get(self.url, params=self.__params, timeout=10)
+		response.raise_for_status()
+		self.json_data = response.json()
 		return self.json_data
 
 

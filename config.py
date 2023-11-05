@@ -8,14 +8,19 @@
 '''
 #########################################################
 
-import os
 from typing import Tuple
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parent
 
 hh_url = 'https://api.hh.ru/vacancies'
 sj_url = 'https://api.superjob.ru/2.0/vacancies'
 
-hh_file_vacantions = os.path.join('data', 'hh_vacancy.json')
-sj_file_vacantions = os.path.join('data', 'sj_vacancy.json')
-my_files: tuple[str, str] = (hh_file_vacantions, sj_file_vacantions)
+DATA_DIR = BASE_DIR.joinpath('data')
+hh_file_vacantions = DATA_DIR.joinpath('hh_vacancy.json')
+sj_file_vacantions = DATA_DIR.joinpath('sj_vacancy.json')
+
+my_files: tuple[Path, ...] = (hh_file_vacantions, sj_file_vacantions)
 
 #########################################################
